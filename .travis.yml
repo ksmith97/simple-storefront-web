@@ -12,6 +12,7 @@ deploy:
   skip_cleanup: true
   local-dir: public
   detect_encoding: true
+  acl: public_read
 notifications:
   email:
     on_failure: true
