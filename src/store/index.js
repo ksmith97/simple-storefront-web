@@ -33,6 +33,32 @@ const initialState = {
       measure: 'Cup',
       stock: '100.0',
     }]
+  }, {
+    id: 1,
+    name: 'Orange Juice',
+    price: '2.0',
+    ingredients: [{
+      id: 1,
+      quantity: '2.0',
+      name: 'Lemon',
+      price: '0.1',
+      measure: 'Juice',
+      stock: '100.0',
+    }, {
+      id: 2,
+      quantity: '0.5',
+      name: 'Sugar',
+      price: '0.1',
+      measure: 'Cup',
+      stock: '100.0',
+    }, {
+      id: 3,
+      quantity: '4',
+      name: 'Water',
+      price: '0.0',
+      measure: 'Cup',
+      stock: '100.0',
+    }]
   }]
 }
 

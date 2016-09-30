@@ -31,7 +31,7 @@ module.exports = {
 	],
 	output: {
 		path: path.join(__dirname, 'public'),
-		filename: '[chunkhash].js'
+		filename: 'bundle.js'
 	},
 	resolve: {
 		extensions: ['', '.js', '.jsx']
@@ -55,7 +55,7 @@ module.exports = {
 			}
 		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
-		new ExtractTextPlugin('[contenthash].css', {
+		new ExtractTextPlugin('style.css', {
 			allChunks: true
 		}),
 		new HtmlWebpackPlugin({
