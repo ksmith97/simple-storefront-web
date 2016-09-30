@@ -3,7 +3,7 @@ import Ingredient from './Ingredient';
 import React, {PropTypes} from 'react';
 
 const IngredientList = ({ingredients}) => {
-    const ingredientList = ingredients.map((i)=><Ingredient ingredient={i}/>);
+    const ingredientList = ingredients.map((i, idx)=><Ingredient key={idx} ingredient={i}/>);
 
     return (
       <div>

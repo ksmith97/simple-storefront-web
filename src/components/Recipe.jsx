@@ -18,7 +18,7 @@ const Recipe = ({recipe, onSubmit}) => {
         </div>
 
         <div className={styles.bottom}>
-          <IngredientList ingredients={recipe.ingredients} />
+          <IngredientList ingredients={recipe.recipeIngredients} />
         </div>
 
     </div>

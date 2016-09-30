@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react';
 const Ingredient = ({ingredient}) => {
   return (
     <div className="ingredient">
-      <i>{ingredient.quantity} {ingredient.measure}</i> of <b>{ingredient.name}</b>
+      <i>{ingredient.quantity} {ingredient.ingredient.measure}</i> of <b>{ingredient.ingredient.name}</b>
     </div>
   );
 }

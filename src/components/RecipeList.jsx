@@ -4,7 +4,7 @@ import Recipe from './Recipe.jsx';
 
 const RecipeList = ({recipes}) => {
     const submit = () => console.log('submit!');
-    const recipeList = recipes.map((r) => <Recipe recipe={r} onSubmit={submit}/>);
+    const recipeList = recipes.map((r, idx) => <Recipe key={idx} recipe={r} onSubmit={submit}/>);
 
     return (
       <div className="container">
