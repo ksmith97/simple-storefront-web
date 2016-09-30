@@ -1,3 +1,4 @@
+'use strict';
 import _ from 'lodash';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import { routerReducer } from 'react-router-redux';
