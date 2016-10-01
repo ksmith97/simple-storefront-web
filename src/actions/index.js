@@ -8,43 +8,37 @@ export const fetchRecipesRequest = () => {
   }
 }
 
-export const FETCH_RECIPES_SUCCESS = 'FETCH_RECIPES_SUCCESS';
-
-export const fetchRecipesSuccess = () => {
-  return {
-    type: FETCH_RECIPES_SUCCESS
-  }
-}
-
 export const FETCH_RECIPES_ERROR = 'FETCH_RECIPES_ERROR';
 
-export const fetchRecipesError = () => {
+export const fetchRecipesError = (error) => {
   return {
-    type: FETCH_RECIPES_ERROR
+    type: FETCH_RECIPES_ERROR,
+    error
   }
 }
 
 export const RECEIVE_RECIPES = 'RECEIVE_RECIPES';
 
-export const receiveRecipes = (recipes) => {
-  return {
+export const receiveRecipes = (recipes) => ({
     type: RECEIVE_RECIPES,
     recipes,
     receivedAt: Date.now()
-  }
-}
+  });
+
 
 export const fetchRecipes = () => {
 
   return (dispatch) => {
+    console.log('Fetching Recipes');
     dispatch(fetchRecipesRequest());
     
     return getRecipes()
       .then((recipes) => {
+	console.log('Recipes', recipes);
         dispatch(receiveRecipes(recipes));
       })
       .catch((err) => {
-        console.log('An error occured when retrieving recipes.', err);
+        console.error(err);
         dispatch(fetchRecipesError(err.message));
       });
   }

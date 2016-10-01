@@ -1,3 +1,4 @@
+'use strict';
 import request from 'superagent';
 
 export function getRecipes() {
@@ -8,7 +9,14 @@ export function getRecipes() {
       .end((err, {body}) => {
         if (err) return reject(err);
 
-        return resolve(body);
+        return resolve(body.recipes);
       });
+  });
+}
+const recipes = [{"id":1,"name":"Lemonade","price":1,"recipeIngredients":[{"id":1,"recipe_id":1,"ingredient_id":1,"quantity":2,"ingredient":{"id":1,"name":"Lemon","price":0.1,"measure":"Juice","stock":100,"ingredientcol":null}},{"id":2,"recipe_id":1,"ingredient_id":2,"quantity":0.5,"ingredient":{"id":2,"name":"Sugar","price":0.1,"measure":"Cup","stock":100,"ingredientcol":null}},{"id":3,"recipe_id":1,"ingredient_id":3,"quantity":4,"ingredient":{"id":3,"name":"Water","price":0,"measure":"Cup","stock":100,"ingredientcol":null}}],"products":[]},{"id":2,"name":"Rum and Coke","price":5,"recipeIngredients":[{"id":4,"recipe_id":2,"ingredient_id":7,"quantity":1.5,"ingredient":{"id":7,"name":"Rum","price":1,"measure":"fl oz","stock":100,"ingredientcol":null}},{"id":5,"recipe_id":2,"ingredient_id":9,"quantity":5,"ingredient":{"id":9,"name":"Coke","price":0.1,"measure":"fl oz","stock":100,"ingredientcol":null}},{"id":6,"recipe_id":2,"ingredient_id":8,"quantity":1,"ingredient":{"id":8,"name":"Mint Leaf","price":0.25,"measure":"leaves","stock":100,"ingredientcol":null}}],"products":[]},{"id":3,"name":"Mojito","price":5,"recipeIngredients":[{"id":7,"recipe_id":3,"ingredient_id":3,"quantity":1.5,"ingredient":{"id":3,"name":"Water","price":0,"measure":"Cup","stock":100,"ingredientcol":null}},{"id":8,"recipe_id":3,"ingredient_id":7,"quantity":2,"ingredient":{"id":7,"name":"Rum","price":1,"measure":"fl oz","stock":100,"ingredientcol":null}},{"id":9,"recipe_id":3,"ingredient_id":8,"quantity":6,"ingredient":{"id":8,"name":"Mint Leaf","price":0.25,"measure":"leaves","stock":100,"ingredientcol":null}},{"id":10,"recipe_id":3,"ingredient_id":2,"quantity":4,"ingredient":{"id":2,"name":"Sugar","price":0.1,"measure":"Cup","stock":100,"ingredientcol":null}}],"products":[]}];
+
+export function getRecipesMock() {
+  return new Promise((resolve) => {
+    return resolve(recipes);
   });
 }

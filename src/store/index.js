@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'lodash';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { routerReducer as routing} from 'react-router-redux';
 import * as actions from '../actions/index.js';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -11,73 +11,30 @@ const initialState = {
     userName: 'Anonymous',
     state: 'LOGGED_OUT'
   },
-  recipes: [{
-      "id": 1,
-      "name": "Lemonade",
-      "price": 1,
-      "recipeIngredients": [
-        {
-          "id": 1,
-          "recipe_id": 1,
-          "ingredient_id": 1,
-          "quantity": 2,
-          "ingredient": {
-            "id": 1,
-            "name": "Lemon",
-            "price": 0.1,
-            "measure": "Juice",
-            "stock": 100,
-            "ingredientcol": null
-          }
-        },
-        {
-          "id": 2,
-          "recipe_id": 1,
-          "ingredient_id": 2,
-          "quantity": 0.5,
-          "ingredient": {
-            "id": 2,
-            "name": "Sugar",
-            "price": 0.1,
-            "measure": "Cup",
-            "stock": 100,
-            "ingredientcol": null
-          }
-        },
-        {
-          "id": 3,
-          "recipe_id": 1,
-          "ingredient_id": 3,
-          "quantity": 4,
-          "ingredient": {
-            "id": 3,
-            "name": "Water",
-            "price": 0,
-            "measure": "Cup",
-            "stock": 100,
-            "ingredientcol": null
-          }
-        }
-      ],
-      "products": []
-    }]
+  recipes: {
+    values: [],
+    loading: false
+  }
 }
 
-function recipes(state = [], action) {
+function recipes(state = {}, action) {
+  console.log('Recipe actions', action);
   switch(action.type) {
     case actions.FETCH_RECIPES_REQUEST:
+      return Object.assign({}, state, {loading: true});
     case actions.FETCH_RECIPES_SUCCESS:
-      return Object.assign({}, state, {recipes: action.response});
+      return Object.assign({}, state, {values: action.recipes});
     case actions.FETCH_RECIPES_ERROR:
-      return Object.assign({}, state, {recipes: action.response, error: action.error});
+      return Object.assign({}, state, {loading: false, error: action.error});
     case actions.RECEIVE_RECIPES:
-      return Object.assign({}, state, {recipies: action.response});
+      return Object.assign({}, state, {loading: false, values: action.recipes});
     default:
       return state;
   }
 }
 
 function user(state = {user: {userName: 'Anonymous', state: 'LOGGED_OUT'}}, action) {
+  console.log('User Reducer', action);
   switch(action.type) {
     case 'LOGGING_IN':
       return _.merge({}, state, {user: {state: action.type}});
@@ -91,11 +48,14 @@ function user(state = {user: {userName: 'Anonymous', state: 'LOGGED_OUT'}}, acti
 }
 
 const store = createStore(
-      combineReducers({user, recipes, routing: routerReducer}), 
+      combineReducers({user, recipes, routing}), 
       initialState, 
-      applyMiddleware(thunkMiddleware, createLogger));
+      applyMiddleware(thunkMiddleware, createLogger()));
 
 export default store;
 
-store.dispatch(actions.fetchRecipes());
+store.dispatch(actions.fetchRecipes()).then(() => {
+  console.log('Recipes dispatch finished');
+  console.log('State', store.getState());
+});
 

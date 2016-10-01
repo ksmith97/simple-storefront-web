@@ -5,7 +5,13 @@ import RecipeList from './RecipeList.jsx';
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-const Home = ({recipes}) => (
+const loader = (loading, component) => {
+  if(loading) return "Loading...";
+  
+  return component;
+};
+
+const Home = ({recipes, loading}) => (
   <div className={styles.home}>
     <nav className={ styles.navbar + ' navbar navbar-default navbar-fixed-top'}>
       <div className="container">
@@ -15,7 +21,7 @@ const Home = ({recipes}) => (
       </div>
     </nav>
 
-    <RecipeList recipes={recipes} />
+    {loader(loading, (<RecipeList recipes={recipes} />))}
   </div>
 );
 
@@ -25,8 +31,7 @@ Home.propTypes = {
 }
 
 const mapStateToProps = (state = {recipes: []}) => {
-  console.log(state);
-  return {recipes: state.recipes};
+  return {recipes: state.recipes.values, loading: state.recipes.loading};
 }
 
 export default connect(mapStateToProps)(Home);
