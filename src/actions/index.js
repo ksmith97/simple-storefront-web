@@ -1,4 +1,4 @@
-import { getRecipes } from './api';
+import { getRecipesMock as getRecipes } from './api';
 
 export const FETCH_RECIPES_REQUEST = 'FETCH_RECIPES_REQUEST';
 
@@ -43,3 +43,10 @@ export const fetchRecipes = () => {
       });
   }
 }
+
+export const FILTER_RECIPES = 'FILTER_RECIPES';
+
+export const filterRecipes = (filter) => ({
+  type: FILTER_RECIPES,
+  filter: filter
+});

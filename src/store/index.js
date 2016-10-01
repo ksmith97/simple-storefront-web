@@ -13,12 +13,12 @@ const initialState = {
   },
   recipes: {
     values: [],
-    loading: false
+    loading: false,
+    filter: ''
   }
 }
 
 function recipes(state = {}, action) {
-  console.log('Recipe actions', action);
   switch(action.type) {
     case actions.FETCH_RECIPES_REQUEST:
       return Object.assign({}, state, {loading: true});
@@ -28,13 +28,14 @@ function recipes(state = {}, action) {
       return Object.assign({}, state, {loading: false, error: action.error});
     case actions.RECEIVE_RECIPES:
       return Object.assign({}, state, {loading: false, values: action.recipes});
+    case actions.FILTER_RECIPES:
+      return Object.assign({}, state, {filter: action.filter});
     default:
       return state;
   }
 }
 
 function user(state = {user: {userName: 'Anonymous', state: 'LOGGED_OUT'}}, action) {
-  console.log('User Reducer', action);
   switch(action.type) {
     case 'LOGGING_IN':
       return _.merge({}, state, {user: {state: action.type}});

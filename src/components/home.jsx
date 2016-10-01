@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import RecipeList from './RecipeList.jsx';
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import SearchableRecipeList from './SearchableRecipeList';
+import {filterRecipes} from '../actions';
 
 const loader = (loading, component) => {
   if(loading) return "Loading...";
@@ -11,7 +13,7 @@ const loader = (loading, component) => {
   return component;
 };
 
-const Home = ({recipes, loading}) => (
+const Home = ({recipes, loading, filter, onSearchChange}) => (
   <div className={styles.home}>
     <nav className={ styles.navbar + ' navbar navbar-default navbar-fixed-top'}>
       <div className="container">
@@ -21,7 +23,7 @@ const Home = ({recipes, loading}) => (
       </div>
     </nav>
 
-    {loader(loading, (<RecipeList recipes={recipes} />))}
+    {loader(loading, (<SearchableRecipeList recipes={recipes} filter={filter} onSearchChange={onSearchChange}/>))}
   </div>
 );
 
@@ -30,8 +32,22 @@ Home.propTypes = {
   recipes: PropTypes.array.isRequired
 }
 
-const mapStateToProps = (state = {recipes: []}) => {
-  return {recipes: state.recipes.values, loading: state.recipes.loading};
+const stringContainsFragment = (str, frag) => {
+  return str.toLowerCase().indexOf(frag.toLowerCase()) !== -1;
 }
 
-export default connect(mapStateToProps)(Home);
+const recipeContainsString = (str, recipe) => {
+  return stringContainsFragment(recipe.name, str) 
+        || recipe.recipeIngredients.some(i => stringContainsFragment(i.ingredient.name, str));
+}
+
+const mapStateToProps = (state = {values: [], loading: false, filter: ''}) => {
+  let recipes = state.recipes.values;
+  const filter = state.recipes.filter;
+  if (filter) {
+    recipes = recipes.filter(recipeContainsString.bind(null, filter));
+  }
+  return {recipes, loading: state.recipes.loading};
+}
+
+export default connect(mapStateToProps, {onSearchChange: filterRecipes})(Home);
