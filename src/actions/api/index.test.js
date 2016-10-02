@@ -1,6 +1,7 @@
-import { getRecipes } from './';
+import { getRecipes, getCsrfToken, submitLoginForm } from './';
 import { expect } from 'chai';
 import nock from 'nock';
+import loginResponse from './testLoginResponse';
 
 describe('Index api', function() {
   let recipeNock;
@@ -72,6 +73,33 @@ describe('Index api', function() {
         const recipe = recipes[0];
 
         expect(recipe).to.have.property('id');
+      })
+      .catch(done);
+  });
+});
+
+describe('Index api', function() {
+  let nockLogin, nockLoginProg;
+  beforeEach(() => {
+    nockLogin = nock('/')
+      .get('login')
+      .reply(200, loginResponse, {'Content-Type': 'text/html'});
+
+    nockLoginProg = nock('/')
+      .post('login_prog')
+      .reply(200, {success: true}, {'Content-Type': 'application/json'});
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  it('submitLoginForm simple sucess', (done) => {
+    submitLoginForm()
+      .then(() => {
+        nockLogin.isDone();
+        nockLoginProg.isDone();
+        done();
       })
       .catch(done);
   });

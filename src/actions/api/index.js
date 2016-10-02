@@ -1,5 +1,6 @@
 'use strict';
 import request from 'superagent';
+import jquery from 'jquery';
 
 export function getRecipes() {
   return new Promise((resolve, reject) => {
@@ -19,4 +20,57 @@ export function getRecipesMock() {
   return new Promise((resolve) => {
     return resolve(recipes);
   });
+}
+
+const getToken = body => {
+  const $xml = jquery(jquery.parseHTML(body));
+  return $xml.find('[name=_csrf_token]').val();
+}
+
+export function getCsrfToken() {
+  return new Promise((resolve, reject) => {
+    request
+      .get('/login')
+      .set('Accept', 'text/html')
+      .end(({err, body}) => {
+        if (err) return reject(err);
+
+        return resolve(getToken(body));
+      });
+  });
+}
+
+export function getUser() {
+  return new Promise((resolve, reject) => {
+    request
+      .get
+  });
+}
+
+export function postLoginForm(params) {
+  return new Promise((resolve, reject) => {
+    if(!params.username || !params.password) return reject('Missing params to login');
+
+    request
+      .post('login_prog')
+      .set('Accept', 'application/json')
+      .send(params)
+      .end(({err, body}) => {
+        if(err) return reject(err);
+        else if(body.success !== true || body.error) return reject(body.error);
+        
+        return resolve();
+      });
+  });
+}
+
+export function submitLoginForm(form) {
+  return getCsrfToken()
+    .then(token => {
+      const params = Object.assign({}, form, {'_csrf_token': token});
+      return postLoginForm(params);
+    }, err => {
+      console.error('Failed to retrieve csrf token', err);
+      reject(err.message);
+    })
 }
