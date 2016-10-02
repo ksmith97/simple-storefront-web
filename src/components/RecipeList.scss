@@ -1,0 +1,10 @@
+.recipeList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px;
+}
+
+.recipeList > * {
+  margin: 5px;
+}

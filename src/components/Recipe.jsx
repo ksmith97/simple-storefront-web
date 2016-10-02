@@ -3,10 +3,7 @@ import styles from './Recipe.scss';
 import React, {PropTypes} from 'react';
 import IngredientList from './IngredientList.jsx';
 
-const Recipe = ({recipe, onSubmit}) => {
-  return (
-    <form className="col-md-4" action={onSubmit} method="post">
-
+const Recipe = ({recipe, onSubmit}) => (
       <div className={styles.recipe}>
 
         <div className={styles.top}>
@@ -22,9 +19,8 @@ const Recipe = ({recipe, onSubmit}) => {
         </div>
 
     </div>
+);
 
-  </form>);
-}
 
 Recipe.propTypes = {
   recipe: PropTypes.object.isRequired,

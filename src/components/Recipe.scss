@@ -4,11 +4,12 @@
   border-style: solid;
   border-color: rgb(221, 221, 221);
   border-image: initial;
+  display: inline-block;
+  width: 300px;
 }
 
 .recipe > .top {
   border-bottom: 2px solid rgb(221, 221, 221);
-  padding: 40px 0px;
   padding: 40px 0px 40px 0px;
 }
 

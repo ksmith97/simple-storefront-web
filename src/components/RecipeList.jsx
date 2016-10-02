@@ -1,4 +1,5 @@
 'use strict';
+import styles from './RecipeList.scss';
 import React, {PropTypes} from 'react';
 import Recipe from './Recipe.jsx';
 
@@ -7,11 +8,9 @@ const RecipeList = ({recipes}) => {
     const recipeList = recipes.map((r, idx) => <Recipe key={idx} recipe={r} onSubmit={submit}/>);
 
     return (
-      <div className="container">
-        <div className="row">
-          {recipeList}
-        </div>    
-      </div>
+      <div className={styles.recipeList}>
+        {recipeList}
+      </div>    
     );
 }
 
