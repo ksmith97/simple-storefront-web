@@ -50,3 +50,7 @@ export const filterRecipes = (filter) => ({
   type: FILTER_RECIPES,
   filter: filter
 });
+
+export const login = () => {
+  console.log('Login!');
+}
