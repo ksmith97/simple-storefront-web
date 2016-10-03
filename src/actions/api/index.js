@@ -34,8 +34,7 @@ export function getCsrfToken() {
       .set('Accept', 'text/html')
       .end((err, body) => {
         if (err) return reject(err);
-        window.asd = {body, getToken, jquery};
-        const token = getToken(body);
+        const token = getToken(body.text);
 
         if(!token) return reject('Failed to retrieve CSRF token.');
         
