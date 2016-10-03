@@ -60,7 +60,6 @@ export function postLoginForm(params) {
       .send(params)
       .end((err, {body}) => {
         if(err) return reject(err);
-        else if(body.success !== true || body.error) return reject(body.error);
         
         return resolve();
       });
