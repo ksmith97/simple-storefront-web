@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const UserProfile = ({user}) => {
   if(user.authenticated) {
-    return <div className={styles.navbarRight + ' navbar-bran'}>Welcome, {user.userName}</div>
+    return <div className={styles.navbarRight + ' navbar-brand'}>Welcome, {user.userName}</div>
   }
 
   return <Link className={styles.navbarRight + ' navbar-brand'} to="/login">Login</Link>
