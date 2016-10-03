@@ -16,7 +16,7 @@ const LoginForm = ({values, onChange, onSubmit}) =>(
 
       <div className="form-group">
         <label>
-          Password <input onChange={onChange.bind(null, 'password')} required="required" className="form-control" placeholder="Password"/>
+          Password <input type="password" onChange={onChange.bind(null, 'password')} required="required" className="form-control" placeholder="Password"/>
         </label>
       </div>
 
