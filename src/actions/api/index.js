@@ -72,9 +72,6 @@ export function submitLoginForm(form) {
     .then(token => {
       const params = Object.assign({}, form, {'_csrf_token': token});
       return postLoginForm(params);
-    }, err => {
-      console.error('Failed to retrieve csrf token', err);
-      reject(err.message);
     })
 }
 
