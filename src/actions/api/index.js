@@ -58,10 +58,10 @@ export function postLoginForm(params) {
       .post('login_prog')
       .set('Accept', 'application/json')
       .send(params)
-      .end((err, body) => {
+      .end((err, {body}) => {
         if(err) return reject(err);
+        else if(body.success !== true || body.error) return reject(body.error);
         
-        window.asd.body = body;
         return resolve();
       });
   });
