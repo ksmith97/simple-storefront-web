@@ -47,9 +47,12 @@ export const filterRecipes = filter => ({
   filter: filter
 });
 
-export const login = () => {
-  console.log('Login!');
-}
+export const LOGIN = 'LOGIN';
+
+export const login = (userName) => ({
+  type: LOGIN,
+  user: {userName}
+})
 
 export const LOGIN_FORM_UPDATE = 'LOGIN_FORM_UPDATE';
 export const LOGIN_FORM_SUBMIT = 'LOGIN_FORM_SUBMIT';
@@ -84,12 +87,11 @@ export function submitLoginForm() {
     submitLoginFormApi(form)
       .then((user) => {
         dispatch(loginFormSuccess(user));
+        dispatch(login(form.username));
+        dispatch(push('/'));
       })
       .catch(error => {
         dispatch(loginFormFail(error));
-      })
-      .then(()=> {
-        dispatch(push('/'));
       });
   }
 }

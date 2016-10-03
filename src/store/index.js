@@ -44,14 +44,10 @@ function recipes(state = {}, action) {
   }
 }
 
-function user(state = {user: {userName: 'Anonymous', state: 'LOGGED_OUT'}}, action) {
+function user(state = {user: {userName: 'Anonymous', authenticated: false}}, action) {
   switch(action.type) {
-    case 'LOGGING_IN':
-      return _.merge({}, state, {user: {state: action.type}});
-    case 'LOGIN_SUCCESS':
-      return _.merge({}, state, {user: {state: action.type}}, {user: action.value});
-    case 'LOGIN_FAIL':
-      return _.merge({}, state, {user: {state: action.type}});
+    case actions.LOGIN:
+      return Object.assign({}, state, {userName: action.user.userName, authenticated: true});
     default:
       return state;
   }
