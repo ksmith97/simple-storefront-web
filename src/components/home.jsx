@@ -4,8 +4,8 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const Home = ({children}) => (
-  <div className={styles.home}>
-    <nav className={ styles.navbar + ' navbar navbar-default navbar-fixed-top'}>
+  <div>
+    <nav className={ styles.homeNavbar + ' navbar navbar-default navbar-fixed-top'}>
       <div className="container">
         <a className="navbar-brand" href="#">Storefront</a>
 

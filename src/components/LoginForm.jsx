@@ -1,26 +1,22 @@
 import React from 'react';
 import { login } from '../actions';
 import styles from './LoginForm.scss';
+import { submitLoginForm, loginFormUpdate } from '../actions';
+import { connect } from 'react-redux';
 
-const LoginForm = () =>(
+const LoginForm = ({values, onChange, onSubmit}) =>(
   <div className={styles.loginFormContainer}>
-    <form className={styles.loginForm} onSubmit={login}>
+    <form className={styles.loginForm} onSubmit={onSubmit}>
       <h2>Login to Storefront</h2>
       <div className="form-group">
         <label>
-          Username <input onChange={evt=>console.log('Username', evt.target.value)} required="required" className="form-control" placeholder="Username"/>
+          Username <input onChange={onChange.bind(null, 'username')} required="required" className="form-control" placeholder="Username"/>
         </label>
       </div>
 
       <div className="form-group">
         <label>
-          Password <input onChange={evt=>console.log('Password', evt.target.value)} required="required" className="form-control" placeholder="Password"/>
-        </label>
-      </div>
-
-      <div className="form-check">
-        <label>
-          <input type="checkbox" onChange={evt=>console.log('Password', evt.target.value)} className="form-check-inline"/> Remember me
+          Password <input onChange={onChange.bind(null, 'password')} required="required" className="form-control" placeholder="Password"/>
         </label>
       </div>
 
@@ -29,4 +25,18 @@ const LoginForm = () =>(
   </div>
 );
 
-export default LoginForm;
+const mapStateToProps = (state = {values: {}}) => {
+  return {values: state.values};
+}
+
+const mapDispatchToProps = {
+  onChange: (name, evt) => {
+    return loginFormUpdate(name, evt.target.value);
+  },
+  onSubmit: function(evt) {
+    evt.preventDefault();
+    return submitLoginForm();
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

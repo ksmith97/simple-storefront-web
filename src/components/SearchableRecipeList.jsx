@@ -40,7 +40,7 @@ const recipeContainsString = (str, recipe) => {
         || recipe.recipeIngredients.some(i => stringContainsFragment(i.ingredient.name, str));
 }
 
-const mapStateToProps = (state = {values: [], loading: false, filter: ''}) => {
+const mapStateToProps = (state = {values: {}}) => {
   let recipes = state.recipes.values;
   const filter = state.recipes.filter;
   if (filter) {

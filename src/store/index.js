@@ -1,20 +1,29 @@
 'use strict';
 import _ from 'lodash';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import { routerReducer as routing} from 'react-router-redux';
+import { routerReducer as routing, routerMiddleware} from 'react-router-redux';
+import { browserHistory } from 'react-router';
 import * as actions from '../actions/index.js';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 const initialState = {
   user: {
+    authenticated: false,
     userName: 'Anonymous',
-    state: 'LOGGED_OUT'
   },
   recipes: {
     values: [],
     loading: false,
     filter: ''
+  },
+  loginForm: {
+    loggingIn: false,
+    values: {
+      _username: '',
+      _password: '',
+      _csrf_token: ''
+    }
   }
 }
 
@@ -48,10 +57,33 @@ function user(state = {user: {userName: 'Anonymous', state: 'LOGGED_OUT'}}, acti
   }
 }
 
+function loginForm(state={loginForm: {values: {}}}, action) {
+  switch(action.type) {
+    case actions.LOGIN_FORM_UPDATE:
+      return Object.assign({}, state, {
+        values: Object.assign({}, state.values, {[action.name]: action.value})
+      });
+    case actions.LOGIN_FORM_SUBMIT:
+      return Object.assign({}, state, {
+        loggingIn: true
+      });
+    case actions.LOGIN_FORM_SUCCESS:
+      return Object.assign({}, state, {
+        loggingIn: false
+      });
+    case actions.LOGIN_FORM_FAIL:
+      return Object.assign({}, state, {
+        loggingIn: false
+      });
+    default:
+      return state;
+  }
+}
+
 const store = createStore(
-      combineReducers({user, recipes, routing}), 
+      combineReducers({user, recipes, routing, loginForm}), 
       initialState, 
-      applyMiddleware(thunkMiddleware, createLogger()));
+      applyMiddleware(thunkMiddleware, createLogger(), routerMiddleware(browserHistory)));
 
 export default store;
 
