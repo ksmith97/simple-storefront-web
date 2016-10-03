@@ -4,21 +4,31 @@ import styles from './LoginForm.scss';
 import { submitLoginForm, loginFormUpdate } from '../actions';
 import { connect } from 'react-redux';
 
-const LoginForm = ({values, onChange, onSubmit}) =>(
+const nbsp = '\u00a0';
+
+const ErrorMessage = ({message}) => (
+  <div className="form-group">
+    <strong className={styles.loginError}>{message ? 'Login Failed' : nbsp}</strong>
+  </div>);
+
+const LoginForm = ({form, onChange, onSubmit}) =>(
   <div className={styles.loginFormContainer}>
     <form className={styles.loginForm} onSubmit={onSubmit}>
       <h2>Login to Storefront</h2>
+
       <div className="form-group">
         <label>
-          Username <input onChange={onChange.bind(null, 'username')} required="required" className="form-control" placeholder="Username"/>
+          Username <input value={form.values.userName} onChange={onChange.bind(null, 'username')} required="required" className="form-control" placeholder="Username"/>
         </label>
       </div>
 
       <div className="form-group">
         <label>
-          Password <input type="password" onChange={onChange.bind(null, 'password')} required="required" className="form-control" placeholder="Password"/>
+          Password <input value={form.values.password} type="password" onChange={onChange.bind(null, 'password')} required="required" className="form-control" placeholder="Password"/>
         </label>
       </div>
+
+      <ErrorMessage message={form.error}/>
 
       <button type="submit" className="btn btn-primary">Login</button>
     </form>
@@ -26,7 +36,7 @@ const LoginForm = ({values, onChange, onSubmit}) =>(
 );
 
 const mapStateToProps = (state = {values: {}}) => {
-  return {values: state.values};
+  return {form: state.loginForm};
 }
 
 const mapDispatchToProps = {

@@ -65,11 +65,13 @@ function loginForm(state={loginForm: {values: {}}}, action) {
       });
     case actions.LOGIN_FORM_SUCCESS:
       return Object.assign({}, state, {
-        loggingIn: false
+        loggingIn: false,
+        error: ''
       });
     case actions.LOGIN_FORM_FAIL:
       return Object.assign({}, state, {
-        loggingIn: false
+        loggingIn: false,
+        error: action.error
       });
     default:
       return state;
