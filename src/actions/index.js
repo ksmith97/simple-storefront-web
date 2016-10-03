@@ -1,4 +1,4 @@
-import { getRecipesMock as getRecipes, submitLoginFormMock as submitLoginFormApi } from './api';
+import { getRecipesMock as getRecipes, submitLoginForm as submitLoginFormApi } from './api';
 import { push } from 'react-router-redux';
 
 export const FETCH_RECIPES_REQUEST = 'FETCH_RECIPES_REQUEST';
