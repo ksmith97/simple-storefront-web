@@ -16,7 +16,7 @@ const Home = ({user, children}) => (
   <div>
     <nav className={ styles.homeNavbar + ' navbar navbar-default navbar-fixed-top'}>
       <div className="container">
-        <a className="navbar-brand" href="#">Storefront</a>
+        <Link className="navbar-brand" to="/">Storefront</Link>
 
         <UserProfile user={user} />
       </div>
